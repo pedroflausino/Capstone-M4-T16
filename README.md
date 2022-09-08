@@ -7,6 +7,7 @@
  - `TypeScript`
  - `Express`
  - `TypeORM`
+ - `Jest`
 ## 📁 Descrição do projeto 
 <p> Projeto em desenvolvimento para a finalização do módulo 4 do curso de Desenvolvedor Web FullStack da Kenzie Academy Brasil. Se trata de uma aplicação de delivery de alimentos com objetivo de combater o desperdício de alimentos.</p>
 
@@ -144,6 +145,15 @@ Rota para criação delivery com os seguintes dados:
 #### - A rota pode ser acessada apenas pela company
 #### - A rota de criação deve retornar todos os dados
 
+
+## Autores
+
+
+
+
+
+| [<img src="https://ca.slack-edge.com/TQZR39SET-U02J2PK3CQ6-80d71cb42e39-512" width=115><br><sub>Arthur Sousa Amaral</sub>](https://github.com/) | [<img src="https://ca.slack-edge.com/TQZR39SET-U02VA5NRKE2-b035f15699bf-512" width=115><br><sub>Everton Santos de Oliveira</sub>](https://github.com/) | [<img src="https://ca.slack-edge.com/TQZR39SET-U0304KDE54H-13abb78ee401-512" width=115><br><sub>Laís Carvalho de Oliveira</sub>](https://github.com/laiscarvo) |[<img src="https://ca.slack-edge.com/TQZR39SET-U02V29Y51KR-285346d57d78-512" width=115><br><sub>Pedro Flausino</sub>](https://github.com/pedroflausino) |  [<img src="https://ca.slack-edge.com/TQZR39SET-U02LFC2M2NB-b64399613e90-512" width=115><br><sub>Rodrigo Méro de Omena</sub>](https://github.com/) |  
+| :---: | :---: | :---: |  :---: | :---: |
 
 
 
