@@ -1,5 +1,14 @@
-import { Column, PrimaryGeneratedColumn, Entity } from "typeorm";
+import {
+  Column,
+  PrimaryGeneratedColumn,
+  Entity,
+  ManyToOne,
+  OneToMany,
+} from "typeorm";
 import { v4 as uuid } from "uuid";
+import { Category } from "./category.entity";
+import { Company } from "./company.entity";
+import { Order_Products } from "./orderProducts.entity";
 
 @Entity("Product")
 export class Product {
@@ -7,19 +16,28 @@ export class Product {
   readonly id: string;
 
   @Column()
-  name: string
+  name: string;
 
   @Column()
-  description: string
+  description: string;
+
+  @Column({ type: "integer" })
+  quantity: number;
+
+  @Column({ type: "float" })
+  price: number;
 
   @Column()
-  quantity: number
+  expirationDate: string;
 
-  @Column()
-  price: number
+  @ManyToOne(() => Company)
+  company: Company;
 
-  @Column()
-  expirationDate: string
+  @ManyToOne(() => Category)
+  category: Category;
+
+  @OneToMany(() => Order_Products, (orderProducts) => orderProducts.product)
+  orderProducts: Order_Products[];
 
   constructor() {
     if (!this.id) {

@@ -1,5 +1,6 @@
-import { Column, PrimaryGeneratedColumn, Entity } from "typeorm";
+import { Column, PrimaryGeneratedColumn, Entity, OneToMany } from "typeorm";
 import { v4 as uuid } from "uuid";
+import { Order } from "./order.entity";
 
 @Entity("Delivery")
 export class Delivery {
@@ -14,6 +15,9 @@ export class Delivery {
 
   @Column()
   isActive: boolean;
+
+  @OneToMany(() => Order, (orders) => orders.delivery)
+  orders: Order[];
 
   constructor() {
     if (!this.id) {

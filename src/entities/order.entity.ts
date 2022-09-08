@@ -1,5 +1,14 @@
-import { Column, PrimaryGeneratedColumn, Entity } from "typeorm";
+import {
+  Column,
+  PrimaryGeneratedColumn,
+  Entity,
+  ManyToOne,
+  OneToMany,
+} from "typeorm";
 import { v4 as uuid } from "uuid";
+import { Delivery } from "./delivery.entity";
+import { Order_Products } from "./orderProducts.entity";
+import { User } from "./user.entity";
 
 @Entity("Order")
 export class Order {
@@ -8,6 +17,15 @@ export class Order {
 
   @Column()
   status: string;
+
+  @ManyToOne(() => User)
+  user: User;
+
+  @ManyToOne(() => Delivery)
+  delivery: Delivery;
+
+  @OneToMany(() => Order_Products, (orderProducts) => orderProducts.order)
+  orderProducts: Order_Products[];
 
   constructor() {
     if (!this.id) {

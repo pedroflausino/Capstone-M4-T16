@@ -1,5 +1,14 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  OneToOne,
+  PrimaryGeneratedColumn,
+  JoinColumn,
+  OneToMany,
+} from "typeorm";
 import { v4 as uuid } from "uuid";
+import { Addresses } from "./address.entity";
+import { Order } from "./order.entity";
 
 @Entity("User")
 export class User {
@@ -23,6 +32,15 @@ export class User {
 
   @Column()
   isActive: boolean;
+
+  @OneToOne(() => Addresses, {
+    eager: true,
+  })
+  @JoinColumn()
+  address: Addresses;
+
+  @OneToMany(() => Order, (orders) => orders.user)
+  orders: Order[];
 
   constructor() {
     if (!this.id) {
