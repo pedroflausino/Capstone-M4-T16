@@ -10,3 +10,4 @@ import AppDataSource from "./data-source";
     console.log("Servidor executando");
   });
 })();
+
