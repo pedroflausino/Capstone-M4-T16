@@ -1,6 +1,6 @@
 import { Express } from "express";
-import ordersRoutes from "./orders.routers";
+import { orderRoutes } from "./orders.routers";
 
 export const appRoutes = (app: Express) => {
-    app.use("/orders", ordersRoutes)
-}
+  app.use("/orders", orderRoutes());
+};
