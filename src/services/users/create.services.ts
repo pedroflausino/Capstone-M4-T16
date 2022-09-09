@@ -3,7 +3,7 @@ import { AppError } from "../../errors/AppError";
 import { IUserRequest } from "../../interfaces/users";
 import { User } from "../../entities/user.entity";
 import { Addresses } from "../../entities/address.entity";
-import { hash } from "bcryptjs";
+import { hash } from "bcrypt";
 //colocar se é admin ou não.
 
  const createUserService = async ({
