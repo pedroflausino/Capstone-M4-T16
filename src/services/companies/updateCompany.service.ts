@@ -1,10 +1,7 @@
 import AppDataSource from "../../data-source";
 import { Company } from "../../entities/company.entity";
 import { AppError } from "../../errors/AppError";
-import {
-    ICompanyRequest,
-    ICompanyUpdateRequest,
-} from "../../interfaces/companies";
+import { ICompanyUpdateRequest } from "../../interfaces/companies";
 import { hash } from "bcrypt";
 
 const updateCompanyService = async (
