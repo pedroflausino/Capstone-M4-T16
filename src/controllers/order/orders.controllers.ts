@@ -1,8 +1,22 @@
+import { Request, Response } from "express";
+import { IOrderRequest } from "../../interfaces/orders";
 import createOrderService from "../../services/orders/createOrder.service";
 import deleteOrderService from "../../services/orders/deleteOrder.service";
 
-const createOrderController = () => {};
+const createOrderController = async (req: Request, res: Response) => {
+  const { userId, status, delivery }: IOrderRequest = req.body;
+  const response = await createOrderService({ userId, status, delivery });
+  return res
+    .status(201)
+    .json({ response, message: "Order created with sucess" });
+};
 
-const deleteOrderController = () => {};
+const deleteOrderController = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const response = await deleteOrderService({ id });
+  return res
+    .status(200)
+    .json({ response, message: "Order deleted with sucess" });
+};
 
 export { createOrderController, deleteOrderController };
