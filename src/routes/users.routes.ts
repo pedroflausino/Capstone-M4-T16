@@ -1,10 +1,10 @@
 import { Router } from "express";
 import {
-  createUserController,
-  listUserController,
-  listUsersController,
-  updateUserController,
-  softDeleteUserController,
+    createUserController,
+    listUserController,
+    listUsersController,
+    updateUserController,
+    softDeleteUserController,
 } from "../controllers/users/user.controller";
 
 import { validationMiddleware } from "../middlewares/validationSchema.middleware";
@@ -12,20 +12,20 @@ import { newUserSchema } from "../schemas/newUser.schema";
 
 import ensureAuthMiddleware from "../middlewares/ensureAuth.middleware";
 
-const usersRoutes = Router();
+const router = Router();
 
-usersRoutes.post("", validationMiddleware(newUserSchema), createUserController);
+export const userRoutes = () => {
+    router.post("", validationMiddleware(newUserSchema), createUserController);
 
-usersRoutes.get("/:id", ensureAuthMiddleware, listUserController);
+    router.get("/:id", ensureAuthMiddleware, listUserController);
 
-usersRoutes.get("", ensureAuthMiddleware, listUsersController);
+    router.get("", ensureAuthMiddleware, listUsersController);
 
-usersRoutes.patch("/:id", updateUserController);
+    router.patch("/:id", updateUserController);
 
-usersRoutes.delete(
-  "/:id",
-  ensureAuthMiddleware,
-  softDeleteUserController
-);
+    router.delete("/:id", ensureAuthMiddleware, softDeleteUserController);
 
-export default usersRoutes;
+    return router;
+};
+
+
