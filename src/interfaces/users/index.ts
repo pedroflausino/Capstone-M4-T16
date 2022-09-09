@@ -11,6 +11,7 @@ export interface IUserRequest {
   email: string;
   password: string;
   address: IAddressRequest;
+  isAdmin?: boolean;
 }
 
 export interface IUserUpdate{

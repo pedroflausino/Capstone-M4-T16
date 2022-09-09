@@ -4,12 +4,14 @@ import { IUserRequest } from "../../interfaces/users";
 import { User } from "../../entities/user.entity";
 import { Addresses } from "../../entities/address.entity";
 import { hash } from "bcryptjs";
+//colocar se é admin ou não.
 
  const createUserService = async ({
   name,
   email,
   password,
   address,
+  isAdmin,
 }: IUserRequest) => {
   const userRepo = AppDataSource.getRepository(User);
   const addressRepo = AppDataSource.getRepository(Addresses);
@@ -43,6 +45,7 @@ import { hash } from "bcryptjs";
       password: hashedPassword,
       address: newAddress,
       isActive: true,
+      isAdmin,
   });
   
   await userRepo.save(newUser);
