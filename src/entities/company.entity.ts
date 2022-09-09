@@ -5,6 +5,8 @@ import {
   OneToOne,
   JoinColumn,
   OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from "typeorm";
 import { v4 as uuid } from "uuid";
 import { Addresses } from "./address.entity";
@@ -22,13 +24,13 @@ export class Company {
   email: string;
 
   @Column()
-  password: string;
+  password?: string;
 
-  @Column()
-  createdAt: string;
+  @CreateDateColumn()
+  createdAt: Date;
 
-  @Column()
-  updatedAt: string;
+  @UpdateDateColumn()
+  updatedAt: Date;
 
   @Column()
   isActive: boolean;
