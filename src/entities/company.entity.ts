@@ -7,10 +7,12 @@ import {
   OneToMany,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
 } from "typeorm";
 import { v4 as uuid } from "uuid";
 import { Addresses } from "./address.entity";
 import { Product } from "./product.entity";
+import { User } from "./user.entity";
 
 @Entity("Company")
 export class Company {
@@ -19,12 +21,6 @@ export class Company {
 
   @Column({ unique: true })
   name: string;
-
-  @Column({ unique: true })
-  email: string;
-
-  @Column()
-  password?: string;
 
   @CreateDateColumn()
   createdAt: Date;
@@ -46,6 +42,9 @@ export class Company {
 
   @OneToMany(() => Product, (products) => products.company)
   products: Product[];
+
+  @ManyToOne(()=>User, (user)=> user.companies)
+  user: User;
 
   constructor() {
     if (!this.id) {

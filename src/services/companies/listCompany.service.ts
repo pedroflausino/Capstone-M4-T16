@@ -9,9 +9,7 @@ const listCompanyService = async (id: string) => {
     if (!company) {
         throw new AppError("company not found", 404);
     }
-    if (company.password) {
-        delete company.password;
-    }
+    
     return company;
 };
 

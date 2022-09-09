@@ -8,23 +8,15 @@ export interface IAddressRequest {
 
 export interface ICompanyRequest {
     name: string;
-    email: string;
-    password?: string;
     address: IAddressRequest;
 }
 
 export interface ICompany {
     id: string;
     name: string;
-    email: string;
     createdAt: Date;
     updatedAt: Date;
     address: IAddressRequest;
-}
-
-export interface ICompanyLogin {
-    email: string;
-    password: string;
 }
 
 export interface ICompanyId {
@@ -34,8 +26,6 @@ export interface ICompanyId {
 
 export interface ICompanyUpdateRequest {
     name?: string;
-    email?: string;
-    password?: string;
     isOpen?: boolean;
     address?: IAddressRequest;
 }
