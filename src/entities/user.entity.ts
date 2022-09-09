@@ -8,6 +8,7 @@ import {
 } from "typeorm";
 import { v4 as uuid } from "uuid";
 import { Addresses } from "./address.entity";
+import { Company } from "./company.entity";
 import { Order } from "./order.entity";
 
 @Entity("User")
@@ -44,6 +45,9 @@ export class User {
 
   @OneToMany(() => Order, (orders) => orders.user)
   orders: Order[];
+
+  @OneToMany(()=> Company, (company)=> company.user)
+  companies: Company[]
 
   constructor() {
     if (!this.id) {
