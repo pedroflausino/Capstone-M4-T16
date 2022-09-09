@@ -4,12 +4,12 @@ import listUsersService from "../../services/users/list.users.services";
 import updateUserService from "../../services/users/update.service";
 import softDeleteUserService from "../../services/users/delete.service";
 import { Request, Response } from "express";
-import { instanceToPlain } from "class-transformer";
+
 
 const createUserController = async (req: Request, res: Response) => {
   const data = req.body;
   const newUser = await createUserService(data);
-  return res.status(201).json(instanceToPlain(newUser));
+  return res.status(201).json(newUser);
 };
 
 const listUserController = async (req: Request, res: Response) => {
