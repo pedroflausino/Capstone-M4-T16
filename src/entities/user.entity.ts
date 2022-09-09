@@ -23,7 +23,7 @@ export class User {
   email: string;
 
   @Column()
-  password: string;
+  password?: string;
 
   @Column()
   createdAt: string;
@@ -33,6 +33,9 @@ export class User {
 
   @Column()
   isActive: boolean;
+
+  @Column()
+  isAdmin: boolean;
 
   @OneToOne(() => Addresses, {
     eager: true,
