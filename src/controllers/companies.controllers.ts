@@ -73,6 +73,8 @@ export const deleteCompanyController = async (req: Request, res: Response) => {
 export const listCompaniesController = async (req: Request, res: Response) => {
     try {
         const companies = await listCompaniesService();
+
+        return res.status(200).json(companies)
     } catch (err) {
         if (err instanceof AppError) {
             handleError(err, res);
