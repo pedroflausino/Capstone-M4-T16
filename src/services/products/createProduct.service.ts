@@ -14,18 +14,18 @@ const companiesRepository = AppDataSource.getRepository(Company)
 const categoriesRepository = AppDataSource.getRepository(Category)
 
 
-const findCompany = await companiesRepository.findOneBy({id: companyId})
+const findCompany = await companiesRepository.findOneBy({id: companyId});
 if(!findCompany){
     throw new AppError("Company not found", 400)
-}
+};
 
-const findCategory = await categoriesRepository.findOneBy({id: categoryId})
+const findCategory = await categoriesRepository.findOneBy({id: categoryId});
 if(!findCategory){
     throw new AppError("Invalid category", 400)
-}
+};
 
 
-const product = productsRepository.create()
+const product = productsRepository.create();
 
 product.name = name
 product.description = description
@@ -36,7 +36,7 @@ product.company = findCompany
 product.category = findCategory
 
 
-await productsRepository.save(product)
-return product
+await productsRepository.save(product);
+return product;
 
 }
