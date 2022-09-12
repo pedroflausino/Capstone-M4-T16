@@ -14,12 +14,12 @@ export interface IUserRequest {
   isAdmin?: boolean;
 }
 
-export interface IUserUpdate{
+export interface IUserUpdate {
   name?: string;
   email?: string;
   password?: string;
   address?: IAddressRequest;
-} 
+}
 export interface IUser {
   id: string;
   name: string;
@@ -44,3 +44,9 @@ export interface IMyid {
   id: string;
 }
 
+export interface IUserSchema {
+  name: string;
+  email: string;
+  password: string;
+  address: IAddressRequest;
+}
