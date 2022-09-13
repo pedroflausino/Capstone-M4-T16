@@ -118,17 +118,11 @@ A rota deve deletar do banco o produto.
 
 ### `POST - /orders`
 Rota responsável pelo pedido com os seguintes dados:
+- `id`: Deve ser gerado no momento da validação dos dados, deve ser um uuid.
 - `status`: string
+- `products`: Array de Id de produtos. 
+- `deliveryId`: Id do entregador.
 - `userId`: Não deve ser passado no body da requisição e sim pego através do token do usuário.
-- `id`: Deve ser gerado no momento da validação dos dados, deve ser um uuid.
-
-### `POST - /orders/products`
-Rota responsável pelo agendamento de uma visita a um imóvel com os seguintes dados:
-- `date`:  date
-- `hour`: time
-- `orderId`: string
-- `productId`: string
-- `id`: Deve ser gerado no momento da validação dos dados, deve ser um uuid.
 
 ### `GET - /orders/:id/products`
 A rota deve listar todos os produtos de um pedido
