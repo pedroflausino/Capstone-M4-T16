@@ -22,8 +22,11 @@ const sessionService = async ({email, password}: IUserLogin): Promise<string> =>
     if(!user.isActive){
         throw new AppError("Invalid user", 401)
     }
+    if(!user.password){
+        throw new AppError("Internal Error", 500)
+    }
 
-    const matchPassaword = await compare(user.password, password)
+    const matchPassaword = await compare(password, user.password)
 
     if(!matchPassaword){
         throw new AppError("Invalid email or password")
