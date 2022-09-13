@@ -4,8 +4,9 @@ import createOrderService from "../../services/orders/createOrder.service";
 import deleteOrderService from "../../services/orders/deleteOrder.service";
 
 const createOrderController = async (req: Request, res: Response) => {
-  const { userId, status, delivery }: IOrderRequest = req.body;
-  const response = await createOrderService({ userId, status, delivery });
+  const { status, delivery, products }: IOrderRequest = req.body;
+  const userId = req.user.userId;
+  const response = await createOrderService({ userId, status, delivery, products });
   return res
     .status(201)
     .json({ response, message: "Order created with sucess" });
