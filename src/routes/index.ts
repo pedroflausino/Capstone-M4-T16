@@ -4,6 +4,8 @@ import { companiesRoutes } from "./companies.routes";
 import { orderRoutes } from "./orders.routes";
 import { productsRoutes } from "./products.routes";
 import { categoriesRoutes } from "./categories.routes";
+import { deliveryRoutes } from "./delivery.routes";
+import {sessionRoutes} from "./session.routes"
 
 export const appRoutes = (app: Express) => {
     app.use("/orders", orderRoutes());
@@ -11,4 +13,6 @@ export const appRoutes = (app: Express) => {
     app.use("/users", userRoutes());
     app.use("/products", productsRoutes());
     app.use("/categories", categoriesRoutes());
+    app.use("/delivery", deliveryRoutes());
+    app.use("/login", sessionRoutes());
 };

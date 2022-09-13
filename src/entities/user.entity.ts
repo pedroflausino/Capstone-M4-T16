@@ -35,7 +35,7 @@ export class User {
   isActive: boolean;
 
   @Column()
-  isAdmin: boolean;
+  isAdm: boolean;
 
   @OneToOne(() => Addresses, {
     eager: true,

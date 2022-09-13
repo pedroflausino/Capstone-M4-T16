@@ -11,7 +11,7 @@ import { hash } from "bcrypt";
   email,
   password,
   address,
-  isAdmin,
+  isAdm,
 }: IUserRequest) => {
   const userRepo = AppDataSource.getRepository(User);
   const addressRepo = AppDataSource.getRepository(Addresses);
@@ -45,7 +45,7 @@ import { hash } from "bcrypt";
       password: hashedPassword,
       address: newAddress,
       isActive: true,
-      isAdmin,
+      isAdm,
   });
   
   await userRepo.save(newUser);
