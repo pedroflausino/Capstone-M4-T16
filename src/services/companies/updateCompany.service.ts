@@ -1,28 +1,35 @@
 import AppDataSource from "../../data-source";
 import { Company } from "../../entities/company.entity";
 import { AppError } from "../../errors/AppError";
-import { ICompanyUpdateRequest } from "../../interfaces/companies";
 
+const updateCompanyService = async (id: string, name: string) => {
+  const companyRepo = AppDataSource.getRepository(Company);
+  const companies = await companyRepo.find();
 
-const updateCompanyService = async (
-    id: string,
-    { name, address }: ICompanyUpdateRequest
-) => {
-    const companyRepo = AppDataSource.getRepository(Company);
-    const company = await companyRepo.findOneBy({ id });
+  const company = companies.find((e) => e.id === id);
 
-    if (!company) {
-        throw new AppError("company not found", 404);
-    }
+  if (!company) {
+    throw new AppError("Company not found", 404);
+  }
 
-    await companyRepo.update(id, {
-        name: name ? name : company.name,
-        address: address ? address : company.address,
-    });
+  if (company.name === name) {
+    throw new AppError("Equal name", 401);
+  }
 
-    const updatedCompany = await companyRepo.findOneBy({ id });
-   
-    return updatedCompany;
+  await companyRepo.update(id, {
+    name: name,
+  });
+
+  const d: Date = new Date();
+  const date: string = `${d.getDate()}/${d.getMonth()}/${d.getFullYear()}, ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
+
+  await companyRepo.update(id, { updatedAt: date });
+
+  const updateCompanies = await companyRepo.find();
+
+  const updatedCompany = updateCompanies.find((e) => e.id === id);
+
+  return updatedCompany;
 };
 
 export default updateCompanyService;

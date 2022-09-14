@@ -13,7 +13,7 @@ const router = Router();
 export const companiesRoutes = () => {
   router.post("", ensureAuthMiddleware, createCompanyController);
   router.get("/:id", ensureAuthMiddleware, listCompanyController);
-  router.post("/:id", updateCompanyController);
+  router.patch("/:id", ensureAuthMiddleware, updateCompanyController);
   router.delete("/:id", ensureAuthMiddleware, deleteCompanyController);
   router.get("", listCompaniesController);
 

@@ -41,11 +41,11 @@ export const listCompanyController = async (req: Request, res: Response) => {
 
 export const updateCompanyController = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const { name, address } = req.body;
-  const company = await updateCompanyService(id, {
-    name,
-    address,
-  });
+  const { name } = req.body;
+  if (!name) {
+    return res.status(401).json({ message: "Name required" });
+  }
+  const company = await updateCompanyService(id, name);
 
   res.status(201).json(company);
 };
