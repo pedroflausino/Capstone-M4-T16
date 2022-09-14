@@ -6,43 +6,59 @@ import listCompanyService from "../../services/companies/listCompany.service";
 import updateCompanyService from "../../services/companies/updateCompany.service";
 
 export const createCompanyController = async (req: Request, res: Response) => {
-    const { name, address } = req.body;
+  const { name, address } = req.body;
+  if (!name) {
+    return res.status(401).json({ message: "Name required" });
+  }
 
-    const newCompany = await createCompanyService({
-        name,
-        address,
-    });
+  if (!address) {
+    return res.status(401).json({ message: "Address required" });
+  }
 
-    return res.status(201).json(newCompany);
+  if (
+    !address.district ||
+    !address.city ||
+    !address.zipCode ||
+    !address.state
+  ) {
+    return res.status(401).json({ message: "All address fields are required" });
+  }
+
+  const newCompany = await createCompanyService(req.user.userId, {
+    name,
+    address,
+  });
+
+  return res.status(201).json(newCompany);
 };
 
 export const listCompanyController = async (req: Request, res: Response) => {
-    const { id } = req.params;
-    const company = await listCompanyService(id);
+  const { id } = req.params;
+  const company = await listCompanyService(id);
 
-    res.status(200).json(company);
+  res.status(200).json(company);
 };
 
 export const updateCompanyController = async (req: Request, res: Response) => {
-    const { id } = req.params;
-    const { name, address } = req.body;
-    const company = await updateCompanyService(id, {
-        name,
-        address,
-    });
+  const { id } = req.params;
+  const { name, address } = req.body;
+  const company = await updateCompanyService(id, {
+    name,
+    address,
+  });
 
-    res.status(201).json(company);
+  res.status(201).json(company);
 };
 
 export const deleteCompanyController = async (req: Request, res: Response) => {
-    const { id } = req.params;
-    const isDeleted = await deleteCompanyService(id);
+  const { id } = req.params;
+  const isDeleted = await deleteCompanyService(id);
 
-    return res.status(200);
+  return res.status(200);
 };
 
 export const listCompaniesController = async (req: Request, res: Response) => {
-    const companies = await listCompaniesService();
+  const companies = await listCompaniesService();
 
-    return res.status(200).json(companies);
+  return res.status(200).json(companies);
 };
