@@ -5,8 +5,6 @@ import {
   OneToOne,
   JoinColumn,
   OneToMany,
-  CreateDateColumn,
-  UpdateDateColumn,
   ManyToOne,
 } from "typeorm";
 import { v4 as uuid } from "uuid";
@@ -22,11 +20,11 @@ export class Company {
   @Column({ unique: true })
   name: string;
 
-  @CreateDateColumn()
-  createdAt: Date;
+  @Column()
+  createdAt: string;
 
-  @UpdateDateColumn()
-  updatedAt: Date;
+  @Column()
+  updatedAt: string;
 
   @Column()
   isActive: boolean;
@@ -43,7 +41,7 @@ export class Company {
   @OneToMany(() => Product, (products) => products.company)
   products: Product[];
 
-  @ManyToOne(()=>User, (user)=> user.companies)
+  @ManyToOne(() => User, (user) => user.companies)
   user: User;
 
   constructor() {

@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import createCompanyService from "../services/companies/createCompany.service";
-import deleteCompanyService from "../services/companies/deleteCompany.service";
-import listCompaniesService from "../services/companies/listCompanies.service";
-import listCompanyService from "../services/companies/listCompany.service";
-import updateCompanyService from "../services/companies/updateCompany.service";
+import createCompanyService from "../../services/companies/createCompany.service";
+import deleteCompanyService from "../../services/companies/deleteCompany.service";
+import listCompaniesService from "../../services/companies/listCompanies.service";
+import listCompanyService from "../../services/companies/listCompany.service";
+import updateCompanyService from "../../services/companies/updateCompany.service";
 
 export const createCompanyController = async (req: Request, res: Response) => {
     const { name, address } = req.body;
