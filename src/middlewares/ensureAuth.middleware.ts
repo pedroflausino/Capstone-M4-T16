@@ -21,8 +21,9 @@ const ensureAuthMiddleware = async (
       if (error) throw new AppError("Invalid token", 401);
 
       req.user = {
-        isActive: decoded.isActive,
         userId: decoded.sub,
+        isAdmin: decoded.isAdmin,
+        isActive: decoded.isActive,
       };
     }
   );

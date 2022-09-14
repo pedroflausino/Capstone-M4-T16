@@ -12,7 +12,8 @@ const newUserSchema: SchemaOf<IUserRequest> = yup.object().shape({
     number: yup.string(),
     city: yup.string().required(),
     state: yup.string().required().max(2, "Invalid state"),
-  }),
+  }),  
+  isAdmin: yup.boolean(),
 });
 
 export { newUserSchema };
