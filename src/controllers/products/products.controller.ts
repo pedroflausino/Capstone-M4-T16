@@ -67,8 +67,10 @@ const updateProductController = async (req: Request, res: Response) => {
 
 const deleteProductController = async (req: Request, res: Response) => {
   const { id } = req.params;
+
   const deleteProduct = await deleteProductService(id);
-  return res.status(200).json(deleteProduct);
+
+  return res.status(200).send();
 };
 
 export {
