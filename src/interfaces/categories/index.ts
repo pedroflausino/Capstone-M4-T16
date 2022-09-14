@@ -5,3 +5,8 @@ export interface ICategoryRequest {
 export interface ICategoryId {
   id: string;
 }
+
+export interface ICategory {
+  id: string;
+  name: string;
+}
