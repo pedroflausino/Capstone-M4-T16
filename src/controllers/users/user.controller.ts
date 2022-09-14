@@ -5,7 +5,6 @@ import updateUserService from "../../services/users/update.service";
 import softDeleteUserService from "../../services/users/delete.service";
 import { Request, Response } from "express";
 
-
 const createUserController = async (req: Request, res: Response) => {
   const data = req.body;
   const newUser = await createUserService(data);
