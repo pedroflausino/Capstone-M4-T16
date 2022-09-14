@@ -1,12 +1,11 @@
-import { Request, Response } from "express"
-import { IUserLogin } from "../../interfaces/users"
-import createDeliveryService from "../../services/delivery/createDelivery.service"
-import sessionService from "../../services/session/session.service"
+import { Request, Response } from "express";
+import { IUserLogin } from "../../interfaces/users";
+import sessionService from "../../services/session/session.service";
 
-const sessionController = async (req:Request, res: Response) => {
-    const { email, password } :IUserLogin = req.body
-    const session = sessionService({email, password})
-    return res.json(session)
-}
+const sessionController = async (req: Request, res: Response) => {
+  const { email, password }: IUserLogin = req.body;
+  const token = await sessionService({ email, password });
+  return res.status(200).send(token);
+};
 
-export {sessionController}
+export { sessionController };

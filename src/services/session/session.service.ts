@@ -7,16 +7,15 @@ import jwt from "jsonwebtoken";
 import "dotenv/config";
 import bcrypt from "bcrypt";
 
-const sessionService = async ({
-  email,
-  password,
-}: IUserLogin): Promise<string> => {
+const sessionService = async ({ email, password }: IUserLogin) => {
   const userRepo = AppDataSource.getRepository(User);
-  const user = await userRepo.findOne({
-    where: {
-      email: email,
-    },
-  });
+  const users = await userRepo.find();
+
+  const user = users.find((e) => e.email === email);
+
+  if (!password) {
+    throw new AppError("Password is required", 401);
+  }
 
   if (!user) {
     throw new AppError("Invalid email or password", 403);
@@ -25,12 +24,9 @@ const sessionService = async ({
   if (!user.isActive) {
     throw new AppError("Invalid user", 401);
   }
-  if (!user.password) {
-    throw new AppError("Internal Error", 500);
-  }
 
   if (!bcrypt.compareSync(password, user.password)) {
-    throw new AppError("Invalid email or password", 401);
+    throw new AppError("Invalid email or password", 403);
   }
 
   const token = jwt.sign(
