@@ -2,22 +2,22 @@ import AppDataSource from "../../data-source";
 import { Company } from "../../entities/company.entity";
 import { AppError } from "../../errors/AppError";
 
-const deleteCompanyService = async (id: string) => {
-    const companyRepo = AppDataSource.getRepository(Company);
-    const company = await companyRepo.findOneBy({ id });
+const deleteCompanyService = async (id: string): Promise<void> => {
+  const companyRepo = AppDataSource.getRepository(Company);
+  const companies = await companyRepo.find();
 
-    if (!company) {
-        throw new AppError("company not found", 404);
-    }
-    if (!company.isActive) {
-        throw new AppError("company already inactive", 409);
-    }
+  const company = companies.find((e) => e.id === id);
 
-    companyRepo.update(id, {
-        isActive: false,
-    });
+  if (!company) {
+    throw new AppError("company not found", 404);
+  }
+  if (!company.isActive) {
+    throw new AppError("company already inactive", 409);
+  }
 
-    return true;
+  companyRepo.update(id, {
+    isActive: false,
+  });
 };
 
 export default deleteCompanyService;

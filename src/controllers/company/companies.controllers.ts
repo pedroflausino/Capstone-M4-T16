@@ -54,7 +54,7 @@ export const deleteCompanyController = async (req: Request, res: Response) => {
   const { id } = req.params;
   const isDeleted = await deleteCompanyService(id);
 
-  return res.status(200);
+  return res.status(200).send();
 };
 
 export const listCompaniesController = async (req: Request, res: Response) => {

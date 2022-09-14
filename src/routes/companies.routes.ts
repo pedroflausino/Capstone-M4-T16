@@ -14,8 +14,8 @@ export const companiesRoutes = () => {
   router.post("", ensureAuthMiddleware, createCompanyController);
   router.get("/:id", ensureAuthMiddleware, listCompanyController);
   router.post("/:id", updateCompanyController);
-  router.delete("/:id", deleteCompanyController);
-  router.get("/", listCompaniesController);
+  router.delete("/:id", ensureAuthMiddleware, deleteCompanyController);
+  router.get("", listCompaniesController);
 
   return router;
 };
