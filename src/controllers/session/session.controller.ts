@@ -5,7 +5,7 @@ import sessionService from "../../services/session/session.service";
 const sessionController = async (req: Request, res: Response) => {
   const { email, password }: IUserLogin = req.body;
   const token = await sessionService({ email, password });
-  return res.status(200).send(token);
+  return res.status(200).send({token: token});
 };
 
 export { sessionController };

@@ -1,31 +1,30 @@
 import { Router } from "express";
 import {
-    createUserController,
-    listUserController,
-    listUsersController,
-    updateUserController,
-    softDeleteUserController,
+  createUserController,
+  listUserController,
+  listUsersController,
+  updateUserController,
+  softDeleteUserController,
 } from "../controllers/users/user.controller";
 
 import { validationMiddleware } from "../middlewares/validationSchema.middleware";
 import { newUserSchema } from "../schemas/newUser.schema";
 
 import ensureAuthMiddleware from "../middlewares/ensureAuth.middleware";
+import isAdmMiddleware from "../middlewares/isAdm.middleware";
 
 const router = Router();
 
 export const userRoutes = () => {
-    router.post("", validationMiddleware(newUserSchema), createUserController);
+  router.post("", validationMiddleware(newUserSchema), createUserController);
 
-    router.get("/:id", ensureAuthMiddleware, listUserController);
+  router.get("/:id", ensureAuthMiddleware, listUserController);
 
-    router.get("", ensureAuthMiddleware, listUsersController);
+  router.get("", ensureAuthMiddleware, isAdmMiddleware, listUsersController);
 
-    router.patch("/:id", updateUserController);
+  router.patch("/:id", updateUserController);
 
-    router.delete("/:id", ensureAuthMiddleware, softDeleteUserController);
+  router.delete("/:id", ensureAuthMiddleware, softDeleteUserController);
 
-    return router;
+  return router;
 };
-
-
