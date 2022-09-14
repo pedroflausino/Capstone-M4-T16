@@ -9,7 +9,7 @@ const router = Router();
 
 export const productsRoutes = () => {
 
-    router.post("", isAdmMiddleware, ensureAuthMiddleware, createProductsController);
+    router.post("", ensureAuthMiddleware, createProductsController);
     router.get("/", ensureAuthMiddleware, listProductsController);
     router.get("/:id", ensureAuthMiddleware, listOneProductController); 
     router.patch("/:id", isAdmMiddleware, ensureAuthMiddleware, updateProductController);
