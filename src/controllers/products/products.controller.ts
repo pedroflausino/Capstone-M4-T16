@@ -53,7 +53,8 @@ const listOneProductController = async (req: Request, res: Response) => {
 };
 
 const updateProductController = async (req: Request, res: Response) => {
-  const { name, description, quantity, price, expirationDate } = req.body;
+  const { name, description, quantity, price, expirationDate, categoryId } =
+    req.body;
   const { id } = req.params;
   const updateProducts = await updateProductsService(id, {
     name,
@@ -61,8 +62,9 @@ const updateProductController = async (req: Request, res: Response) => {
     quantity,
     price,
     expirationDate,
+    categoryId,
   });
-  return res.status(201).json(updateProducts);
+  return res.status(200).json(updateProducts);
 };
 
 const deleteProductController = async (req: Request, res: Response) => {

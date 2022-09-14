@@ -33,7 +33,7 @@ export class Product {
   @ManyToOne(() => Company)
   company: Company;
 
-  @ManyToOne(() => Category)
+  @ManyToOne(() => Category, { eager: true })
   category: Category;
 
   @OneToMany(() => Order_Products, (orderProducts) => orderProducts.product)

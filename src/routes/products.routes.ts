@@ -7,7 +7,6 @@ import {
   updateProductController,
 } from "../controllers/products/products.controller";
 import ensureAuthMiddleware from "../middlewares/ensureAuth.middleware";
-import isAdmMiddleware from "../middlewares/isAdm.middleware";
 
 const router = Router();
 
@@ -15,12 +14,7 @@ export const productsRoutes = () => {
   router.post("", ensureAuthMiddleware, createProductsController);
   router.get("/", ensureAuthMiddleware, listProductsController);
   router.get("/:id", ensureAuthMiddleware, listOneProductController);
-  router.patch(
-    "/:id",
-    isAdmMiddleware,
-    ensureAuthMiddleware,
-    updateProductController
-  );
+  router.patch("/:id", ensureAuthMiddleware, updateProductController);
   router.delete("/:id", ensureAuthMiddleware, deleteProductController);
   return router;
 };
