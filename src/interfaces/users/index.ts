@@ -11,22 +11,23 @@ export interface IUserRequest {
   email: string;
   password: string;
   address: IAddressRequest;
-  isAdmin?: boolean;
+  isAdm: boolean;
 }
 
 export interface IUserUpdate {
   name?: string;
   email?: string;
   password?: string;
-  address?: IAddressRequest;
 }
 export interface IUser {
   id: string;
   name: string;
   email: string;
-  password?: string;
-  createdAt: Date;
-  updatedAt: Date;
+  password: string;
+  isActive: boolean;
+  isAdm: boolean;
+  createdAt: string;
+  updatedAt: string;
   address: IAddressRequest;
 }
 

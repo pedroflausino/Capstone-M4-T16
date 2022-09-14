@@ -6,27 +6,43 @@ import { hash } from "bcrypt";
 
 const updateUserService = async (
   id: string,
-  { name, email, password, address }: IUserUpdate
+  { name, email, password }: IUserUpdate
 ) => {
   const userRepo = AppDataSource.getRepository(User);
-  const user = await userRepo.findOneBy({ id });
+  const users = await userRepo.find();
+
+  const user = users.find((e) => e.id === id);
 
   if (!user) {
     throw new AppError("User not found", 404);
   }
 
-  await userRepo.update(id, {
-    name: name ? name : user.name,
-    email: email ? email : user.email,
-    password: password ? await hash(password, 10) : user.password,
-    address: address ? address : user.address,
-  });
-
-  const updatedUser = await userRepo.findOneBy({ id });
-  if (updatedUser) {
-    delete updatedUser.password;
+  if (name) {
+    await userRepo.update(user.id, { name });
   }
-  return updatedUser;
+
+  if (email) {
+    await userRepo.update(user.id, { email });
+  }
+
+  if (password) {
+    await userRepo.update(user.id, { password: await hash(password, 10) });
+  }
+
+  if (email) {
+    await userRepo.update(user.id, { email });
+  }
+
+  const d: Date = new Date();
+  const date: string = `${d.getDate()}/${d.getMonth()}/${d.getFullYear()}, ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
+
+  await userRepo.update(user.id, { updatedAt: date });
+
+  const newUsers = await userRepo.find();
+
+  const newUser = newUsers.find((e) => e.id === id);
+
+  return newUser;
 };
 
 export default updateUserService;

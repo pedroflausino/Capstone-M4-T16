@@ -5,10 +5,15 @@ import updateUserService from "../../services/users/update.service";
 import softDeleteUserService from "../../services/users/delete.service";
 import { Request, Response } from "express";
 
-
 const createUserController = async (req: Request, res: Response) => {
-  const data = req.body;
-  const newUser = await createUserService(data);
+  const { name, email, password, address, isAdm } = req.body;
+  const newUser = await createUserService({
+    name,
+    email,
+    password,
+    address,
+    isAdm,
+  });
   return res.status(201).json(newUser);
 };
 
@@ -27,22 +32,21 @@ const listUsersController = async (req: Request, res: Response) => {
 
 const updateUserController = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const { name, email, password, address } = req.body;
-  const company = await updateUserService(id, {
+  const { name, email, password } = req.body;
+  const newUser = await updateUserService(id, {
     name,
     email,
     password,
-    address,
   });
 
-  res.status(201).json(company);
+  res.status(201).json(newUser);
 };
 
 const softDeleteUserController = async (req: Request, res: Response) => {
   const { id } = req.params;
   const isDeleted = await softDeleteUserService(id);
 
-  return res.status(200);
+  return res.status(200).send();
 };
 
 export {
