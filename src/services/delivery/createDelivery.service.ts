@@ -3,26 +3,33 @@ import { Delivery } from "../../entities/delivery.entity";
 import { AppError } from "../../errors/AppError";
 import { IDeliveryRequest } from "../../interfaces/delivery";
 
-const createDeliveryService = async({name, phone, isActive}:IDeliveryRequest) : Promise <Delivery> => {
+const createDeliveryService = async ({
+  name,
+  phone,
+}: IDeliveryRequest): Promise<Delivery> => {
+  if (!name || !phone) {
+    throw new AppError("Missing body informations", 400);
+  }
 
- const deliveryRepo = AppDataSource.getRepository(Delivery);
+  const deliveryRepo = AppDataSource.getRepository(Delivery);
 
- const deliveryAreadyExists = await deliveryRepo.findOneBy({ phone });
+  const deliveries = await deliveryRepo.find();
 
- if(deliveryAreadyExists){
-     throw new AppError("User aready exists", 400)
- }
+  const delivery = deliveries.find((e) => e.phone === phone);
 
- const deliveryCreate = deliveryRepo.create({
-     name: name,
-     phone: phone,
-     isActive: isActive,
- })
+  if (delivery) {
+    throw new AppError("User aready exists", 400);
+  }
 
- await deliveryRepo.save(deliveryCreate)
+  const deliveryCreate = deliveryRepo.create({
+    name: name,
+    phone: phone,
+    isActive: false,
+  });
 
- return deliveryCreate
+  await deliveryRepo.save(deliveryCreate);
 
-}
+  return deliveryCreate;
+};
 
-export default createDeliveryService
+export default createDeliveryService;
