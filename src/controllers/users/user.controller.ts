@@ -47,7 +47,7 @@ const softDeleteUserController = async (req: Request, res: Response) => {
   const { id } = req.params;
   const isDeleted = await softDeleteUserService(id);
 
-  return res.status(200);
+  return res.status(200).send();
 };
 
 export {
