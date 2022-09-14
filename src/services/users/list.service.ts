@@ -11,10 +11,6 @@ const listUserService = async (id: string) => {
     throw new AppError("User not found", 404);
   }
 
-  if (user.password) {
-    delete user.password;
-  }
-
   return user;
 };
 

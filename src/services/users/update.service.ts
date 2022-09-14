@@ -23,9 +23,6 @@ const updateUserService = async (
   });
 
   const updatedUser = await userRepo.findOneBy({ id });
-  if (updatedUser) {
-    delete updatedUser.password;
-  }
   return updatedUser;
 };
 

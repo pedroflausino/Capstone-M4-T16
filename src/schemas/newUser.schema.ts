@@ -6,6 +6,7 @@ const newUserSchema: SchemaOf<IUserSchema> = yup.object().shape({
   email: yup.string().email().required(),
   name: yup.string().required(),
   password: yup.string().required(),
+  isAdm: yup.boolean().required(),
   address: yup.object({
     district: yup.string().required(),
     zipCode: yup.string().required().max(8, "Invalid zip code"),

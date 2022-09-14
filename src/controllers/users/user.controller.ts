@@ -6,8 +6,14 @@ import softDeleteUserService from "../../services/users/delete.service";
 import { Request, Response } from "express";
 
 const createUserController = async (req: Request, res: Response) => {
-  const data = req.body;
-  const newUser = await createUserService(data);
+  const { name, email, password, address, isAdm } = req.body;
+  const newUser = await createUserService({
+    name,
+    email,
+    password,
+    address,
+    isAdm,
+  });
   return res.status(201).json(newUser);
 };
 
