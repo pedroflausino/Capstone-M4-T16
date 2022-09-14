@@ -11,10 +11,12 @@ export class Order_Products {
   @CreateDateColumn()
   date: Date;
 
-  @ManyToOne(() => Order)
+  @ManyToOne(() => Order, (order)=>order.orderProducts)
   order: Order;
 
-  @ManyToOne(() => Product)
+  @ManyToOne(() => Product, (prod)=> prod.orderProducts, {
+    eager: true
+  })
   product: Product;
 
   constructor() {
