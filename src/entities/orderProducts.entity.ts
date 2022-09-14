@@ -1,4 +1,4 @@
-import { Column, PrimaryGeneratedColumn, Entity, ManyToOne } from "typeorm";
+import { Column, PrimaryGeneratedColumn, Entity, ManyToOne, CreateDateColumn, UpdateDateColumn } from "typeorm";
 import { v4 as uuid } from "uuid";
 import { Order } from "./order.entity";
 import { Product } from "./product.entity";
@@ -8,16 +8,15 @@ export class Order_Products {
   @PrimaryGeneratedColumn("uuid")
   readonly id: string;
 
-  @Column()
-  date: string;
+  @CreateDateColumn()
+  date: Date;
 
-  @Column()
-  hour: string;
-
-  @ManyToOne(() => Order)
+  @ManyToOne(() => Order, (order)=>order.orderProducts)
   order: Order;
 
-  @ManyToOne(() => Product)
+  @ManyToOne(() => Product, (prod)=> prod.orderProducts, {
+    eager: true
+  })
   product: Product;
 
   constructor() {
