@@ -26,9 +26,6 @@ const createUserService = async ({
   if (addressAlreadyInUse) {
     throw new AppError("address already in use", 409);
   }
-  if (!password) {
-    throw new AppError("password is obrigatory", 409);
-  }
   if (address.state.length > 2 || address.zipCode.length > 8) {
     throw new AppError("invalid address", 409);
   }

@@ -3,9 +3,9 @@ import AppDataSource from "../../data-source";
 import { User } from "../../entities/user.entity";
 import { IUserLogin } from "../../interfaces/users";
 import { AppError } from "../../errors/AppError";
-import { compare } from "bcryptjs";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
+import bcrypt from "bcrypt";
 
 const sessionService = async ({
   email,
@@ -29,10 +29,8 @@ const sessionService = async ({
     throw new AppError("Internal Error", 500);
   }
 
-  const matchPassaword = await compare(password, user.password);
-
-  if (!matchPassaword) {
-    throw new AppError("Invalid email or password");
+  if (!bcrypt.compareSync(password, user.password)) {
+    throw new AppError("Invalid email or password", 401);
   }
 
   const token = jwt.sign(
