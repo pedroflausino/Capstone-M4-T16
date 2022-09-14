@@ -22,7 +22,7 @@ export const userRoutes = () => {
 
   router.get("", ensureAuthMiddleware, isAdmMiddleware, listUsersController);
 
-  router.patch("/:id", updateUserController);
+  router.patch("/:id", ensureAuthMiddleware, updateUserController);
 
   router.delete("/:id", ensureAuthMiddleware, isAdmMiddleware, softDeleteUserController);
 

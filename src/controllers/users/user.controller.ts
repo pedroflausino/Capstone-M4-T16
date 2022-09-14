@@ -32,15 +32,14 @@ const listUsersController = async (req: Request, res: Response) => {
 
 const updateUserController = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const { name, email, password, address } = req.body;
-  const company = await updateUserService(id, {
+  const { name, email, password } = req.body;
+  const newUser = await updateUserService(id, {
     name,
     email,
     password,
-    address,
   });
 
-  res.status(201).json(company);
+  res.status(201).json(newUser);
 };
 
 const softDeleteUserController = async (req: Request, res: Response) => {
