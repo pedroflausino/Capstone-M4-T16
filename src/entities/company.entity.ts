@@ -41,7 +41,7 @@ export class Company {
   @OneToMany(() => Product, (products) => products.company)
   products: Product[];
 
-  @ManyToOne(() => User, (user) => user.companies)
+  @ManyToOne(() => User, (user) => user.companies, { eager: true })
   user: User;
 
   constructor() {

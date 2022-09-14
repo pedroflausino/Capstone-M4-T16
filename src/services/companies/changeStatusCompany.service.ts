@@ -23,7 +23,7 @@ const changeStatusCompanyService = async (
     throw new AppError("User not found", 404);
   }
 
-  if (company.user !== user) {
+  if (company.user.id !== user.id) {
     throw new AppError("You need to be the owner to change status", 401);
   }
 
