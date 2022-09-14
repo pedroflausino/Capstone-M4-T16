@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import changeStatusCompanyService from "../../services/companies/changeStatusCompany.service";
 import createCompanyService from "../../services/companies/createCompany.service";
 import deleteCompanyService from "../../services/companies/deleteCompany.service";
 import listCompaniesService from "../../services/companies/listCompanies.service";
@@ -61,4 +62,14 @@ export const listCompaniesController = async (req: Request, res: Response) => {
   const companies = await listCompaniesService();
 
   return res.status(200).json(companies);
+};
+
+export const changeStatusCompanyController = async (
+  req: Request,
+  res: Response
+) => {
+  const { id } = req.params;
+  const status = await changeStatusCompanyService(req.user.userId, id);
+
+  return res.status(200).send();
 };
