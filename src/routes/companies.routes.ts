@@ -12,7 +12,7 @@ const router = Router();
 
 export const companiesRoutes = () => {
   router.post("", ensureAuthMiddleware, createCompanyController);
-  router.get("/:id", listCompanyController);
+  router.get("/:id", ensureAuthMiddleware, listCompanyController);
   router.post("/:id", updateCompanyController);
   router.delete("/:id", deleteCompanyController);
   router.get("/", listCompaniesController);
