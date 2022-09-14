@@ -48,7 +48,7 @@ const listProductsController = async (req: Request, res: Response) => {
 
 const listOneProductController = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const product = listOneProductsService(id);
+  const product = await listOneProductsService(id);
   return res.status(200).json(product);
 };
 
