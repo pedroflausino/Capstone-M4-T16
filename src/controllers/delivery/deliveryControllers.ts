@@ -6,8 +6,11 @@ import listDeliveryService from "../../services/delivery/listDelivery.service";
 
 const createDeliveryController = async (req: Request, res: Response) => {
   const { name, phone }: IDeliveryRequest = req.body;
+  if (!name || !phone) {
+    return res.status(400).send({ message: "Missing body infomations" });
+  }
 
-  const delivery = createDeliveryService({ name, phone });
+  const delivery = await createDeliveryService({ name, phone });
 
   return res.status(201).json(delivery);
 };

@@ -7,9 +7,6 @@ const createDeliveryService = async ({
   name,
   phone,
 }: IDeliveryRequest): Promise<Delivery> => {
-  if (!name || !phone) {
-    throw new AppError("Missing body informations", 400);
-  }
 
   const deliveryRepo = AppDataSource.getRepository(Delivery);
 
