@@ -46,8 +46,8 @@ export class User {
   @OneToMany(() => Order, (orders) => orders.user)
   orders: Order[];
 
-  @OneToMany(()=> Company, (company)=> company.user)
-  companies: Company[]
+  @OneToMany(() => Company, (company) => company.user)
+  companies: Company[];
 
   constructor() {
     if (!this.id) {

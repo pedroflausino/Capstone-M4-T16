@@ -1,20 +1,23 @@
 import { Router } from "express";
 import {
-    createCompanyController,
-    deleteCompanyController,
-    listCompaniesController,
-    listCompanyController,
-    updateCompanyController,
-} from "../controllers/companies.controllers";
+  changeStatusCompanyController,
+  createCompanyController,
+  deleteCompanyController,
+  listCompaniesController,
+  listCompanyController,
+  updateCompanyController,
+} from "../controllers/company/companies.controllers";
+import ensureAuthMiddleware from "../middlewares/ensureAuth.middleware";
 
 const router = Router();
 
 export const companiesRoutes = () => {
-    router.post("/", createCompanyController);
-    router.get("/:id", listCompanyController);
-    router.post("/:id", updateCompanyController);
-    router.delete("/:id", deleteCompanyController);
-    router.get("/", listCompaniesController);
+  router.post("", ensureAuthMiddleware, createCompanyController);
+  router.get("/:id", ensureAuthMiddleware, listCompanyController);
+  router.patch("/:id", ensureAuthMiddleware, updateCompanyController);
+  router.delete("/:id", ensureAuthMiddleware, deleteCompanyController);
+  router.patch("/changeStatus/:id", ensureAuthMiddleware, changeStatusCompanyController);
+  router.get("", listCompaniesController);
 
-    return router;
+  return router;
 };

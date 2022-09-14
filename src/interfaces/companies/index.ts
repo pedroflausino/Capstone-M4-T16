@@ -1,3 +1,5 @@
+import { IUser } from "../users";
+
 export interface IAddressRequest {
     district: string;
     zipCode: string;
@@ -12,11 +14,13 @@ export interface ICompanyRequest {
 }
 
 export interface ICompany {
-    id: string;
-    name: string;
-    createdAt: Date;
-    updatedAt: Date;
-    address: IAddressRequest;
+    name: string,
+    address: IAddressRequest,
+    isActive: boolean,
+    isOpen: boolean,
+    createdAt: string,
+    updatedAt: string,
+    user: IUser,
 }
 
 export interface ICompanyId {
