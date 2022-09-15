@@ -19,10 +19,12 @@ const createOrderService = async ({
   const orderProductsRepo = AppDataSource.getRepository(Order_Products)
   const productsRepo = AppDataSource.getRepository(Product)
   const deliveryRepo = AppDataSource.getRepository(Delivery)
+
   const deliverys = await deliveryRepo.find()
   const delivery = deliverys.find((element)=> element.id === deliveryId)
   const users =  await userRepo.find()
   const userFind = users.find((ele)=> ele.id === userId);
+
 
   if (!userFind) {
     throw new AppError("User not found", 404);
