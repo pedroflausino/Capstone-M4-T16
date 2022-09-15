@@ -5,7 +5,7 @@
 
 module.exports = {
   preset: "ts-jest",
-  testMatch: ["**/**/*.spec.ts"],
+  testMach: ["**/**/*.test.ts"],
   // All imported modules in your tests should be mocked automatically
   // automock: false,
 
