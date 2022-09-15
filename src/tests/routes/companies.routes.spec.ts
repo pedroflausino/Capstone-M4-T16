@@ -74,11 +74,17 @@ describe("Create an company", () => {
         expect(response.body).toHaveProperty("map")
     })
     test("should list an company", async ()=> {
-        const adminLoginResponse = await request(app).post("/login/"+`${companyId}`).send(mockedAdminLogin);
-        const response = await request(app).get("/companies").set("Authorization", `Bearer ${adminLoginResponse.body.token}`)
+        const adminLoginResponse = await request(app).post("/login").send(mockedAdminLogin);
+        const response = await request(app).get("/companies"+`${companyId}`).set("Authorization", `Bearer ${adminLoginResponse.body.token}`)
         
         expect(response.status).toBe(200)
         expect(response.body).toEqual(expect.any(Object))
+    })
+
+    test("should delete an company", async ()=>{
+        const adminLoginResponse = await request(app).post("/login").send(mockedAdminLogin);
+        const response = await request(app).delete("/companies/"+`${companyId}`).set("Authorization", `Bearer ${adminLoginResponse.body.token}`)
+        expect(response.status).toBe(200)
     })
 
 });
