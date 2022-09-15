@@ -57,6 +57,7 @@ describe("Testing the user routes", () => {
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveLength(2);
+    console.log(response.body);
   });
 
   test("GET /users -  should not be able to list users without authentication", async () => {
@@ -77,7 +78,7 @@ describe("Testing the user routes", () => {
     expect(response.body).toHaveProperty("message");
     expect(response.status).toBe(401);
   });
-  
+
   test("PATCH /users/:id - Should be able to update a user by id", async () => {
     const response = await request(app).put("/users/1").send(mockedUser);
 
