@@ -1,21 +1,24 @@
 import AppDataSource from "../../data-source";
 import { Delivery } from "../../entities/delivery.entity";
 import { AppError } from "../../errors/AppError";
-import { IDelivery } from "../../interfaces/delivery";
-import { IDeliveryRequest } from "../../interfaces/delivery";
 
+const deleteDeliveryService = async (id: string): Promise<void> => {
+  const deliveryRepo = AppDataSource.getRepository(Delivery);
 
+  const deliveries = await deliveryRepo.find();
 
-const deleteDeliveryService = async({id}: IDelivery) :Promise<void> => {
-    const deliveryRepo = AppDataSource.getRepository(Delivery)
+  const delivery = deliveries.find((e) => e.id === id);
 
-    const deliveryFind = await deliveryRepo.findOneBy({id})
+  if (!delivery) {
+    throw new AppError("User not found");
+  }
 
-    if(!deliveryFind){
-        throw new AppError("User not found")
-    }
+  await deliveryRepo
+    .createQueryBuilder()
+    .delete()
+    .from(Delivery)
+    .where("id = :id", { id })
+    .execute();
+};
 
-    await deliveryRepo.delete(id)
-}
-
-export default deleteDeliveryService
+export default deleteDeliveryService;
