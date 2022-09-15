@@ -52,6 +52,7 @@ describe("Create an company", () => {
         const adminLoginResponse = await request(app).post("/login").send(mockedAdminLogin);
         const createdCompany = await request(app).post("/companies").set("Authorization", `Bearer ${adminLoginResponse.body.token}`).send({name,address});
         companyId = createdCompany.body.id
+        console.log(createdCompany.body)
         expect(createdCompany.body).toEqual(expect.objectContaining({
             address: expect.any(Object),
             id: expect.any(String),

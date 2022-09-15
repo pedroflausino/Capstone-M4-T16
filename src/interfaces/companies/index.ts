@@ -21,6 +21,7 @@ export interface ICompany {
     createdAt: string,
     updatedAt: string,
     user: IUser,
+    id?: string
 }
 
 export interface ICompanyId {
