@@ -8,15 +8,15 @@ import {
 import ensureAuthMiddleware from "../middlewares/ensureAuth.middleware";
 import isAdmMiddleware from "../middlewares/isAdm.middleware";
 
-const ordersRoutes = Router();
+const router = Router();
 
 export const orderRoutes = () => {
-  ordersRoutes.post("", createOrderController);
-  ordersRoutes.delete("/:id", deleteOrderController);
-  ordersRoutes.get("",ensureAuthMiddleware, isAdmMiddleware, listOrdersController)
-  ordersRoutes.get("/:id/products", listProductsFromOrderController)
+  router.post("",ensureAuthMiddleware, isAdmMiddleware ,createOrderController);
+  router.delete("/:id", deleteOrderController);
+  router.get("",ensureAuthMiddleware, isAdmMiddleware, listOrdersController)
+  router.get("/:id/products", listProductsFromOrderController)
 
-  return orderRoutes;
+  return router;
 };
 
-export default ordersRoutes;
+

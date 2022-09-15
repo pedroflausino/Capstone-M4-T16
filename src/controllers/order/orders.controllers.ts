@@ -6,8 +6,10 @@ import listOrdersService from "../../services/orders/listOrders.service";
 import listProductsFromOrderService from "../../services/orders/listProductsFromOrder.service";
 
 const createOrderController = async (req: Request, res: Response) => {
+  
   const { status, delivery, products }: IOrderRequest = req.body;
   const userId = req.user.userId;
+  
   const response = await createOrderService({ userId, status, delivery, products });
   return res
     .status(201)
