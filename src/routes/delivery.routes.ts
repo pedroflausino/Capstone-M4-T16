@@ -1,15 +1,17 @@
 import { Router } from "express";
-import { listDeliveryController, createDeliveryController, deleteDeliveryController} from "../controllers/delivery/deliveryControllers";
+import {
+  listDeliveryController,
+  createDeliveryController,
+  deleteDeliveryController,
+} from "../controllers/delivery/deliveryControllers";
+import ensureAuthMiddleware from "../middlewares/ensureAuth.middleware";
 
-
-const deliveriesRoutes = Router();
+const router = Router();
 
 export const deliveryRoutes = () => {
-  deliveriesRoutes.post("", createDeliveryController);
-  deliveriesRoutes.delete("/:id", deleteDeliveryController);
-  deliveriesRoutes.get("", listDeliveryController)
+  router.post("", ensureAuthMiddleware, createDeliveryController);
+  router.delete("/:id", deleteDeliveryController);
+  router.get("", listDeliveryController);
 
-  return deliveryRoutes;
+  return router;
 };
-
-export default deliveriesRoutes;

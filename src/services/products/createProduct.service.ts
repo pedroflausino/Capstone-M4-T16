@@ -3,7 +3,7 @@ import { Category } from "../../entities/category.entity";
 import { Company } from "../../entities/company.entity";
 import { Product } from "../../entities/product.entity";
 import { AppError } from "../../errors/AppError";
-import { IProductRequest } from "../../interfaces/products/index";
+import { IProduct, IProductRequest } from "../../interfaces/products/index";
 
 export const createProductsService = async ({
   name,
@@ -18,26 +18,40 @@ export const createProductsService = async ({
   const companiesRepository = AppDataSource.getRepository(Company);
   const categoriesRepository = AppDataSource.getRepository(Category);
 
-  const findCompany = await companiesRepository.findOneBy({ id: companyId });
-  if (!findCompany) {
+  const companies = await companiesRepository.find();
+  const company = companies.find((e) => e.id === companyId);
+
+  if (!company) {
     throw new AppError("Company not found", 400);
   }
 
-  const findCategory = await categoriesRepository.findOneBy({ id: categoryId });
-  if (!findCategory) {
+  const categories = await categoriesRepository.find();
+  const category = categories.find((e) => e.id === categoryId);
+
+  if (!category) {
     throw new AppError("Invalid category", 400);
   }
 
-  const product = productsRepository.create();
+  const products = await productsRepository.find();
+  const product = products.find(
+    (e) => e.name === name && e.description === description
+  );
 
-  product.name = name;
-  product.description = description;
-  product.quantity = quantity;
-  product.price = price;
-  product.expirationDate = expirationDate;
-  product.company = findCompany;
-  product.category = findCategory;
+  if (product) {
+    throw new AppError("Product already exist", 401);
+  }
 
-  await productsRepository.save(product);
-  return product;
+  const newProduct: IProduct = productsRepository.create({
+    name,
+    description,
+    quantity,
+    price,
+    expirationDate,
+    company: company,
+    category: category,
+  });
+
+  await productsRepository.save(newProduct);
+
+  return newProduct;
 };
