@@ -8,8 +8,6 @@ export const deleteProductService = async (id: string): Promise<void> => {
 
   const product = products.find((e) => e.id === id);
 
-  console.log(product)
-
   if (!product) {
     throw new AppError("Product not found", 404);
   }
