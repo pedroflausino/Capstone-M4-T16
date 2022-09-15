@@ -1,4 +1,5 @@
 import AppDataSource from "../../data-source";
+import { Delivery } from "../../entities/delivery.entity";
 import { Order } from "../../entities/order.entity";
 import { Order_Products } from "../../entities/orderProducts.entity";
 import { Product } from "../../entities/product.entity";
@@ -9,13 +10,15 @@ import { IOrderRequest } from "../../interfaces/orders";
 const createOrderService = async ({
   userId,
   status,
-  delivery,
-  products
+  delivery: deliveryId,
+  products,
 }: IOrderRequest): Promise<Order> => {
   const orderRepo = AppDataSource.getRepository(Order);
   const userRepo = AppDataSource.getRepository(User);
-  const orderProductsRepo = AppDataSource.getRepository(Order_Products)
-  const productsRepo = AppDataSource.getRepository(Product)
+  const orderProductsRepo = AppDataSource.getRepository(Order_Products);
+  const productsRepo = AppDataSource.getRepository(Product);
+  const deliveryRepo = AppDataSource.getRepository(Delivery);
+  const delivery = await deliveryRepo.findOneBy({ id: deliveryId });
 
   const userFind = await userRepo.findOneBy({
     id: userId,
@@ -24,33 +27,31 @@ const createOrderService = async ({
   if (!userFind) {
     throw new AppError("User not found", 404);
   }
-  
-  
+
+  if (!delivery) {
+    throw new AppError("Delivery not found", 404);
+  }
+
   const order = orderRepo.create({
     user: userFind,
     status: status,
     delivery: delivery,
   });
-  
+
   await orderRepo.save(order);
 
-  products.forEach(async (prod)=> {
+  products.forEach(async (prod) => {
+    const ArrayItem = await productsRepo.findOneBy({ id: prod });
 
-    const ArrayItem = await productsRepo.findOneBy({id:prod})
-
-    if(ArrayItem instanceof Product){
-
+    if (ArrayItem instanceof Product) {
       const orderProduct = orderProductsRepo.create({
         order,
         product: ArrayItem,
-      })
+      });
 
-      await orderProductsRepo.save(orderProduct)
+      await orderProductsRepo.save(orderProduct);
     }
-
-  })
-  
-  
+  });
 
   return order;
 };
