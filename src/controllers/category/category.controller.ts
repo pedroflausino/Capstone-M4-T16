@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import createCategoryService from "../../services/categories/createCategory.service";
 import listCategoriesService from "../../services/categories/listCategories.service";
 import listCategoryService from "../../services/categories/listCategory.service";
 
@@ -13,7 +14,14 @@ const listCategoryController = async (req: Request, res: Response) => {
   return res.json(category);
 };
 
-export {
-  listCategoriesController,
-  listCategoryController,
+const createCategoryController = async (req: Request, res: Response) => {
+  const { name } = req.body;
+  if (!name) {
+    return res.status(400).send({ message: "Name is required" });
+  }
+  const newCategory = await createCategoryService(name);
+
+  return res.status(201).send(newCategory);
 };
+
+export { listCategoriesController, listCategoryController, createCategoryController };
