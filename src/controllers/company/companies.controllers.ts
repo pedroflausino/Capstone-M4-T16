@@ -8,6 +8,7 @@ import updateCompanyService from "../../services/companies/updateCompany.service
 
 export const createCompanyController = async (req: Request, res: Response) => {
   const { name, address } = req.body;
+  
   if (!name) {
     return res.status(401).json({ message: "Name required" });
   }
@@ -29,7 +30,7 @@ export const createCompanyController = async (req: Request, res: Response) => {
     name,
     address,
   });
-
+  
   return res.status(201).json(newCompany);
 };
 

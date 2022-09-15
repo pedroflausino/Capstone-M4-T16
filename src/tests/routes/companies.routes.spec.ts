@@ -2,8 +2,7 @@ import request  from "supertest";
 import { DataSource } from "typeorm";
 import app from "../../app";
 import AppDataSource from "../../data-source";
-import createCompanyService from "../../services/companies/createCompany.service";
-import createUserService from "../../services/users/create.services";
+
 
 const mockedAdminLogin = {
     
@@ -25,7 +24,7 @@ describe("Create an company", () => {
     afterAll(async () => {
         await connection.destroy();
     });
-
+    let companyId: string;
     test("should create an company in database", async () => {
         const name = "companyName";
         const address = {
@@ -51,27 +50,36 @@ describe("Create an company", () => {
         const createdUser = await request(app).post("/users").send(user);
         
         const adminLoginResponse = await request(app).post("/login").send(mockedAdminLogin);
-        const createdCompany = await request(app).post("/companies").set("Authorization", `Bearer ${adminLoginResponse.body.token}`).send(JSON.stringify({name,address}));
-        console.log(JSON.stringify({name,address}))
+        const createdCompany = await request(app).post("/companies").set("Authorization", `Bearer ${adminLoginResponse.body.token}`).send({name,address});
+        companyId = createdCompany.body.id
         expect(createdCompany.body).toEqual(expect.objectContaining({
+            address: expect.any(Object),
             id: expect.any(String),
             name,
-            address: expect.any(Object),
             isActive: true,
             isOpen: false,
             createdAt: expect.any(String),
             updatedAt: expect.any(String),
-            user: expect
+            user: expect.any(Object)
 
         }))
     });
+
+    test("should list companies", async ()=> {
+        const adminLoginResponse = await request(app).post("/login").send(mockedAdminLogin);
+        const response = await request(app).get("/companies").set("Authorization", `Bearer ${adminLoginResponse.body.token}`)
+        
+        expect(response.status).toBe(200)
+        expect(response.body).toHaveProperty("map")
+    })
+    test("should list an company", async ()=> {
+        const adminLoginResponse = await request(app).post("/login/"+`${companyId}`).send(mockedAdminLogin);
+        const response = await request(app).get("/companies").set("Authorization", `Bearer ${adminLoginResponse.body.token}`)
+        
+        expect(response.status).toBe(200)
+        expect(response.body).toEqual(expect.any(Object))
+    })
+
 });
 
-test("should list companies", async ()=> {
-    const adminLoginResponse = await request(app).post("/login").send(mockedAdminLogin);
-    const response = await request(app).get("/companies").set("Authorization", `Bearer ${adminLoginResponse.body.token}`)
-    expect(response.status).toBe(200)
-    expect(response.body).toHaveProperty("map")
-})
 
-// test("")
