@@ -14,7 +14,7 @@ const updateUserService = async (
   const user = users.find((e) => e.id === id);
 
   if (!user) {
-    throw new AppError("User not found", 404);
+    throw new AppError("User not found", 400);
   }
 
   if (name) {

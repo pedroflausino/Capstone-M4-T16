@@ -30,7 +30,7 @@ describe("Testing the user routes", () => {
     expect(response.status).toBe(201);
     expect(response.body).toHaveProperty("id");
     expect(response.body).toHaveProperty("name");
-    expect(response.body).not.toHaveProperty("password");
+    expect(response.body).toHaveProperty("password");
     expect(response.body).toHaveProperty("email");
     expect(response.body).toHaveProperty("isAdm");
     expect(response.body).toHaveProperty("isActive");
@@ -75,7 +75,7 @@ describe("Testing the user routes", () => {
       .set("Authorization", `Bearer ${userLoginResponse.body.token}`);
 
     expect(response.body).toHaveProperty("message");
-    expect(response.status).toBe(403);
+    expect(response.status).toBe(401);
   });
   
   test("PATCH /users/:id - Should be able to update a user by id", async () => {
@@ -112,7 +112,7 @@ describe("Testing the user routes", () => {
       .set("Authorization", `Bearer ${adminLoginResponse.body.token}`);
 
     const response = await request(app).delete(
-      `/users/${UserTobeDeleted.body[0].id}`
+      `/users/${UserTobeDeleted.body[0]}`
     );
 
     expect(response.body).toHaveProperty("message");
@@ -130,7 +130,7 @@ describe("Testing the user routes", () => {
       .set("Authorization", `Bearer ${adminLoginResponse.body.token}`);
 
     const response = await request(app)
-      .delete(`/users/${UserTobeDeleted.body[0].id}`)
+      .delete(`/users/${UserTobeDeleted.body[0]}`)
       .set("Authorization", `Bearer ${adminLoginResponse.body.token}`);
     const findUser = await request(app)
       .get("/users")
@@ -150,7 +150,7 @@ describe("Testing the user routes", () => {
       .set("Authorization", `Bearer ${adminLoginResponse.body.token}`);
 
     const response = await request(app)
-      .delete(`/users/${UserTobeDeleted.body[0].id}`)
+      .delete(`/users/${UserTobeDeleted.body[0]}`)
       .set("Authorization", `Bearer ${adminLoginResponse.body.token}`);
     expect(response.status).toBe(400);
     expect(response.body).toHaveProperty("message");
