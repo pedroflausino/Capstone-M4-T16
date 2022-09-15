@@ -39,7 +39,6 @@ const createUserService = async ({
   const date: string = `${d.getDate()}/${d.getMonth()}/${d.getFullYear()}, ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
 
   const newUser: IUser = userRepo.create({
-    id: uuid(),
     name,
     email,
     password: hashedPassword,

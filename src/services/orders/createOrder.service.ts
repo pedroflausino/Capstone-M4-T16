@@ -1,4 +1,5 @@
 import AppDataSource from "../../data-source";
+import { Delivery } from "../../entities/delivery.entity";
 import { Order } from "../../entities/order.entity";
 import { Order_Products } from "../../entities/orderProducts.entity";
 import { Product } from "../../entities/product.entity";
@@ -9,13 +10,15 @@ import { IOrderRequest } from "../../interfaces/orders";
 const createOrderService = async ({
   userId,
   status,
-  delivery,
+  delivery: deliveryId,
   products
 }: IOrderRequest): Promise<Order> => {
   const orderRepo = AppDataSource.getRepository(Order);
   const userRepo = AppDataSource.getRepository(User);
   const orderProductsRepo = AppDataSource.getRepository(Order_Products)
   const productsRepo = AppDataSource.getRepository(Product)
+  const deliveryRepo = AppDataSource.getRepository(Delivery)
+  const delivery = await deliveryRepo.findOneBy({id:deliveryId })
 
   const userFind = await userRepo.findOneBy({
     id: userId,
@@ -25,7 +28,10 @@ const createOrderService = async ({
     throw new AppError("User not found", 404);
   }
   
-  
+  if(!delivery){
+    throw new AppError("Delivery not found", 404)
+  }
+
   const order = orderRepo.create({
     user: userFind,
     status: status,
