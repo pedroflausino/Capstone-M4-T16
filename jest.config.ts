@@ -1,9 +1,11 @@
 /*
- * For a detailed explanation regarding each configuration property and type check, visit:
+ * For a detailed explanation regarding each configuration property, visit:
  * https://jestjs.io/docs/configuration
  */
 
-export default {
+module.exports = {
+  preset: "ts-jest",
+  testMach: ["**/**/*.test.ts"],
   // All imported modules in your tests should be mocked automatically
   // automock: false,
 
@@ -11,7 +13,7 @@ export default {
   // bail: 0,
 
   // The directory where Jest should store its cached dependency information
-  // cacheDirectory: "C:\\Users\\laisc\\AppData\\Local\\Temp\\jest",
+  // cacheDirectory: "C:\\Users\\Everton\\AppData\\Local\\Temp\\jest",
 
   // Automatically clear mock calls, instances, contexts and results before every test
   // clearMocks: false,
@@ -100,8 +102,7 @@ export default {
   // notifyMode: "failure-change",
 
   // A preset that is used as a base for Jest's configuration
-  preset: "ts-jest",
-  testMatch: ["**/**/*.spec.ts"],
+  // preset: undefined,
 
   // Run tests from one or more projects
   // projects: undefined,
