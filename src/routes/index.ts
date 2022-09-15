@@ -6,6 +6,7 @@ import { productsRoutes } from "./products.routes";
 import { categoriesRoutes } from "./categories.routes";
 import { deliveryRoutes } from "./delivery.routes";
 import {sessionRoutes} from "./session.routes"
+import { addressRoutes } from "./address.routes";
 
 export const appRoutes = (app: Express) => {
     app.use("/orders", orderRoutes());
@@ -15,4 +16,5 @@ export const appRoutes = (app: Express) => {
     app.use("/categories", categoriesRoutes());
     app.use("/delivery", deliveryRoutes());
     app.use("/login", sessionRoutes());
+    app.use("/address", addressRoutes())
 };
