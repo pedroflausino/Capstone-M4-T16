@@ -12,7 +12,7 @@ const softDeleteUserService = async (id: string): Promise<void> => {
     throw new AppError("User not found", 404);
   }
   if (currentUser.isActive === false) {
-    throw new AppError("User already excluded", 409);
+    throw new AppError("User already excluded", 400);
   }
 
   await userRepository.update(currentUser!.id, { isActive: false });

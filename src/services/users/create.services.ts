@@ -21,13 +21,13 @@ const createUserService = async ({
   const addressAlreadyInUse = await userRepo.findOneBy({ address });
 
   if (emailAlreadyInUse || nameAlreadyInUse) {
-    throw new AppError("name or email already in use", 409);
+    throw new AppError("name or email already in use");
   }
   if (addressAlreadyInUse) {
-    throw new AppError("address already in use", 409);
+    throw new AppError("address already in use");
   }
   if (address.state.length > 2 || address.zipCode.length > 8) {
-    throw new AppError("invalid address", 409);
+    throw new AppError("invalid address");
   }
 
   const newAddress = addressRepo.create(address);
